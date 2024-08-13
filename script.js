@@ -4,7 +4,6 @@ let isFirstHalf = true, firstHalfComplete = false, isPaused = false;
 
 document.getElementById('startBtn').addEventListener('click', function() {
     if (isPaused) {
-        // Resume logic
         if (firstHalfComplete) {
             if (firstHalfMilliseconds >= 45 * 60 * 1000) {
                 startFirstHalfExtraTime();
@@ -17,7 +16,6 @@ document.getElementById('startBtn').addEventListener('click', function() {
         startTotalTime();
         isPaused = false;
     } else {
-        // Start the initial timers
         if (isFirstHalf && !firstHalfComplete) {
             startFirstHalf();
         } else {
@@ -33,19 +31,19 @@ document.getElementById('pauseBtn').addEventListener('click', function() {
     
     if (isFirstHalf && !firstHalfComplete) {
         pauseFirstHalf();
-        firstHalfComplete = true; // Mark first half as complete
-        isFirstHalf = false; // Move to second half on resume
+        firstHalfComplete = true; 
+        isFirstHalf = false;
     } else if (!isFirstHalf && firstHalfComplete) {
         pauseSecondHalf();
     }
 });
 
 document.getElementById('stopBtn').addEventListener('click', function() {
-    stopTotalTime();
-    pauseFirstHalf();
-    pauseFirstHalfExtraTime();
-    pauseSecondHalf();
-    pauseSecondHalfExtraTime();
+    stopAllTimers();
+});
+
+document.getElementById('resetBtn').addEventListener('click', function() {
+    resetAllTimers();
 });
 
 function startFirstHalf() {
@@ -83,7 +81,7 @@ function pauseFirstHalfExtraTime() {
 
 function startSecondHalf() {
     if (!secondHalfTimer) {
-        secondHalfMilliseconds = 0; // Reset the second half time
+        secondHalfMilliseconds = 0; 
         secondHalfTimer = setInterval(function() {
             secondHalfMilliseconds += 10;
             document.getElementById('secondHalfTime').textContent = formatTime(secondHalfMilliseconds);
@@ -128,9 +126,31 @@ function pauseTotalTime() {
     totalTimeTimer = null;
 }
 
-function stopTotalTime() {
-    clearInterval(totalTimeTimer);
-    totalTimeTimer = null;
+function stopAllTimers() {
+    pauseFirstHalf();
+    pauseFirstHalfExtraTime();
+    pauseSecondHalf();
+    pauseSecondHalfExtraTime();
+    pauseTotalTime();
+}
+
+function resetAllTimers() {
+    stopAllTimers();
+
+    firstHalfMilliseconds = 0;
+    firstHalfExtraMilliseconds = 0;
+    secondHalfMilliseconds = 0;
+    secondHalfExtraMilliseconds = 0;
+    totalMilliseconds = 0;
+    isFirstHalf = true;
+    firstHalfComplete = false;
+    isPaused = false;
+
+    document.getElementById('firstHalfTime').textContent = "00:00:00.000";
+    document.getElementById('firstHalfExtraTime').textContent = "00:00:00.000";
+    document.getElementById('secondHalfTime').textContent = "00:00:00.000";
+    document.getElementById('secondHalfExtraTime').textContent = "00:00:00.000";
+    document.getElementById('totalTime').textContent = "00:00:00.000";
 }
 
 function formatTime(milliseconds) {
