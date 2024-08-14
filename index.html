@@ -4,36 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBFC Stopwatch</title>
-    <link rel="icon" href="favicon.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.png" type="image/png"> <!-- Favicon -->
 </head>
 <body>
     <div class="container">
         <img src="rbfclogo.png" alt="Real Bedford Logo" class="logo">
-        <div class="stopwatch">
-            <div class="display">
+        
+        <!-- Start Time Display -->
+        <div class="time-display">
+            <div class="half-column">
+                <h2>First Half</h2>
                 <div class="timer">
-                    <span id="firstHalfTime">00:00:00.000</span> (1st 1/2)
+                    <strong>Start Time:</strong> <span id="firstHalfStartTime">--:--:--</span>
                 </div>
                 <div class="timer">
-                    <span id="firstHalfExtraTime">00:00:00.000</span> (1st 1/2 ET)
+                    <span id="firstHalfTime">00:00:00.000</span> (1st Half)
                 </div>
                 <div class="timer">
-                    <span id="secondHalfTime">00:00:00.000</span> (2nd 1/2)
+                    <span id="firstHalfExtraTime">00:00:00.000</span> (1st Half Extra Time)
                 </div>
                 <div class="timer">
-                    <span id="secondHalfExtraTime">00:00:00.000</span> (2nd Half ET)
-                </div>
-                <div class="timer">
-                    <span id="totalTime">00:00:00.000</span> (Total Time)
+                    <strong>Stop Time:</strong> <span id="firstHalfStopTime">--:--:--</span>
                 </div>
             </div>
-            <div class="controls">
-                <button id="startBtn">Start</button>
-                <button id="pauseBtn">Pause (HT)</button>
-                <button id="stopBtn">Stop (FT)</button>
-                <button id="resetBtn">Reset</button>
+
+            <div class="half-column">
+                <h2>Second Half</h2>
+                <div class="timer">
+                    <strong>Start Time:</strong> <span id="secondHalfStartTime">--:--:--</span>
+                </div>
+                <div class="timer">
+                    <span id="secondHalfTime">00:00:00.000</span> (2nd Half)
+                </div>
+                <div class="timer">
+                    <span id="secondHalfExtraTime">00:00:00.000</span> (2nd Half Extra Time)
+                </div>
+                <div class="timer">
+                    <strong>Stop Time:</strong> <span id="secondHalfStopTime">--:--:--</span>
+                </div>
             </div>
+        </div>
+
+        <div class="total-time">
+            <h2>Total Time Elapsed</h2>
+            <div class="timer">
+                <span id="totalTime">00:00:00.000</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="startBtn">Start</button>
+            <button id="pauseBtn">Pause (Half-Time)</button>
+            <button id="stopBtn">Stop (Full-Time)</button>
+            <button id="resetBtn">Reset</button> <!-- Reset button added -->
         </div>
     </div>
     <script src="script.js"></script>
