@@ -1,8 +1,8 @@
 body {
-    font-family: 'Courier New', Courier, monospace; /* Digital watch style font */
+    font-family: 'Courier New', Courier, monospace;
     margin: 0;
     padding: 0;
-    background-image: url('tunnel.jpg'); /* Use the background image */
+    background-image: url('tunnel.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -14,13 +14,13 @@ body {
 
 .container {
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.9); /* Less transparency */
+    background-color: rgba(0, 0, 0, 0.9);
     padding: 20px;
     border-radius: 10px;
-    max-width: 80%; /* Responsive width */
+    max-width: 80%;
     width: 100%;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    margin: 20px; /* Add margin for mobile */
+    margin: 20px;
 }
 
 .logo {
@@ -32,12 +32,12 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    flex-wrap: wrap; /* Allow wrapping to prevent overlap */
+    flex-wrap: wrap;
 }
 
 .half-column {
-    width: 48%; /* Columns for each half */
-    min-width: 300px; /* Prevent columns from getting too narrow */
+    width: 48%;
+    min-width: 300px;
 }
 
 .total-time {
@@ -46,10 +46,15 @@ body {
 
 .timer {
     margin: 10px 0;
-    font-size: 1.8em; /* Font size for the timer */
-    color: #f00; /* Red color for the text */
-    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; /* Glow effect for digital watch style */
-    white-space: nowrap; /* Prevent text wrapping */
+    font-size: 1.8em;
+    color: #f00;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+    white-space: nowrap;
+}
+
+.time-for-half {
+    font-size: 2em; /* Slightly larger font size */
+    color: #fff; /* White color for half times */
 }
 
 .extra-time {
@@ -72,7 +77,7 @@ body {
 }
 
 #startBtn {
-    background-color: #1B5E20; /* Dark green */
+    background-color: #1B5E20;
 }
 
 #startBtn:hover {
@@ -80,7 +85,7 @@ body {
 }
 
 #pauseBtn {
-    background-color: #FF6F00; /* Darker amber */
+    background-color: #FF6F00;
 }
 
 #pauseBtn:hover {
@@ -88,7 +93,7 @@ body {
 }
 
 #stopBtn {
-    background-color: #B71C1C; /* Darker red */
+    background-color: #B71C1C;
 }
 
 #stopBtn:hover {
@@ -96,7 +101,7 @@ body {
 }
 
 #resetBtn {
-    background-color: #555; /* Dark gray */
+    background-color: #555;
 }
 
 #resetBtn:hover {
@@ -123,7 +128,11 @@ body {
     }
 
     .timer {
-        font-size: 1.5em; /* Slightly smaller font size on mobile */
+        font-size: 1.5em;
+    }
+
+    .time-for-half {
+        font-size: 1.7em;
     }
 
     .controls button {
@@ -134,11 +143,15 @@ body {
 
 @media only screen and (min-width: 1200px) {
     .container {
-        max-width: 50%; /* Larger width on high-resolution screens */
+        max-width: 50%;
     }
 
     .timer {
-        font-size: 2.2em; /* Larger font size on larger screens */
+        font-size: 2.2em;
+    }
+
+    .time-for-half {
+        font-size: 2.4em;
     }
 
     .controls button {
