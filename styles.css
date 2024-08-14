@@ -17,7 +17,7 @@ body {
     background-color: rgba(0, 0, 0, 0.9); /* Less transparency */
     padding: 20px;
     border-radius: 10px;
-    max-width: 90%; /* Responsive width */
+    max-width: 80%; /* Responsive width */
     width: 100%;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     margin: 20px; /* Add margin for mobile */
@@ -32,10 +32,12 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    flex-wrap: wrap; /* Allow wrapping to prevent overlap */
 }
 
 .half-column {
     width: 48%; /* Columns for each half */
+    min-width: 300px; /* Prevent columns from getting too narrow */
 }
 
 .total-time {
@@ -48,6 +50,10 @@ body {
     color: #f00; /* Red color for the text */
     text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; /* Glow effect for digital watch style */
     white-space: nowrap; /* Prevent text wrapping */
+}
+
+.extra-time {
+    color: #00f; /* Blue color for extra time text */
 }
 
 .controls button {
