@@ -59,39 +59,17 @@ function updateTime() {
     elapsedTime = Date.now() - startTime;
     if (!firstHalfComplete) {
         document.getElementById('firstHalfTime').textContent = formatTime(elapsedTime);
+        document.getElementById('totalTime').textContent = formatTime(totalElapsedTime + elapsedTime); // Continue to update total time
         if (elapsedTime >= 45 * 60 * 1000) {
-            firstHalfComplete = true;
-            clearInterval(timerInterval);
-            startFirstHalfExtraTime();
+            document.getElementById('firstHalfExtraTime').textContent = formatTime(elapsedTime - 45 * 60 * 1000);
         }
     } else if (secondHalfStarted) {
         document.getElementById('secondHalfTime').textContent = formatTime(elapsedTime);
+        document.getElementById('totalTime').textContent = formatTime(totalElapsedTime + elapsedTime); // Continue to update total time
         if (elapsedTime >= 45 * 60 * 1000) {
-            clearInterval(timerInterval);
-            startSecondHalfExtraTime();
+            document.getElementById('secondHalfExtraTime').textContent = formatTime(elapsedTime - 45 * 60 * 1000);
         }
     }
-    document.getElementById('totalTime').textContent = formatTime(totalElapsedTime + elapsedTime); // Show total elapsed time
-}
-
-function startFirstHalfExtraTime() {
-    startTime = Date.now();
-    timerInterval = setInterval(updateFirstHalfExtraTime, 100);
-}
-
-function updateFirstHalfExtraTime() {
-    elapsedTime = Date.now() - startTime;
-    document.getElementById('firstHalfExtraTime').textContent = formatTime(elapsedTime);
-}
-
-function startSecondHalfExtraTime() {
-    startTime = Date.now();
-    timerInterval = setInterval(updateSecondHalfExtraTime, 100);
-}
-
-function updateSecondHalfExtraTime() {
-    elapsedTime = Date.now() - startTime;
-    document.getElementById('secondHalfExtraTime').textContent = formatTime(elapsedTime);
 }
 
 function resetAllTimers() {
