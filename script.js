@@ -1,162 +1,127 @@
-let firstHalfTimer, firstHalfExtraTimer, secondHalfTimer, secondHalfExtraTimer, totalTimeTimer;
-let firstHalfMilliseconds = 0, firstHalfExtraMilliseconds = 0, secondHalfMilliseconds = 0, secondHalfExtraMilliseconds = 0, totalMilliseconds = 0;
-let isFirstHalf = true, firstHalfComplete = false, isPaused = false;
+let startTime = null;
+let elapsedTime = 0;
+let timerInterval = null;
+let firstHalfComplete = false;
+let secondHalfStarted = false;
+let firstHalfStartTime, firstHalfStopTime, secondHalfStartTime, secondHalfStopTime;
 
 document.getElementById('startBtn').addEventListener('click', function() {
-    if (isPaused) {
-        if (firstHalfComplete) {
-            if (firstHalfMilliseconds >= 45 * 60 * 1000) {
-                startFirstHalfExtraTime();
-            } else {
-                startSecondHalf();
-            }
-        } else {
-            startFirstHalf();
-        }
-        startTotalTime();
-        isPaused = false;
-    } else {
-        if (isFirstHalf && !firstHalfComplete) {
-            startFirstHalf();
-        } else {
-            startSecondHalf();
-        }
-        startTotalTime();
+    if (!firstHalfComplete && !secondHalfStarted) {
+        startTime = Date.now();
+        firstHalfStartTime = new Date(startTime);
+        document.getElementById('firstHalfStartTime').textContent = formatClockTime(firstHalfStartTime);
+    } else if (firstHalfComplete && !secondHalfStarted) {
+        startTime = Date.now();
+        secondHalfStartTime = new Date(startTime);
+        document.getElementById('secondHalfStartTime').textContent = formatClockTime(secondHalfStartTime);
+        secondHalfStarted = true;
     }
+    startTimer();
 });
 
 document.getElementById('pauseBtn').addEventListener('click', function() {
-    isPaused = true;
-    pauseTotalTime();
-    
-    if (isFirstHalf && !firstHalfComplete) {
-        pauseFirstHalf();
-        firstHalfComplete = true; 
-        isFirstHalf = false;
-    } else if (!isFirstHalf && firstHalfComplete) {
-        pauseSecondHalf();
+    clearInterval(timerInterval);
+    if (!firstHalfComplete) {
+        firstHalfStopTime = new Date();
+        document.getElementById('firstHalfStopTime').textContent = formatClockTime(firstHalfStopTime);
+        firstHalfComplete = true;
+    } else if (secondHalfStarted) {
+        secondHalfStopTime = new Date();
+        document.getElementById('secondHalfStopTime').textContent = formatClockTime(secondHalfStopTime);
     }
 });
 
 document.getElementById('stopBtn').addEventListener('click', function() {
-    stopAllTimers();
+    clearInterval(timerInterval);
+    if (!firstHalfComplete) {
+        firstHalfStopTime = new Date();
+        document.getElementById('firstHalfStopTime').textContent = formatClockTime(firstHalfStopTime);
+        firstHalfComplete = true;
+    } else if (secondHalfStarted) {
+        secondHalfStopTime = new Date();
+        document.getElementById('secondHalfStopTime').textContent = formatClockTime(secondHalfStopTime);
+    }
 });
 
 document.getElementById('resetBtn').addEventListener('click', function() {
+    clearInterval(timerInterval);
     resetAllTimers();
 });
 
-function startFirstHalf() {
-    if (!firstHalfTimer) {
-        firstHalfTimer = setInterval(function() {
-            firstHalfMilliseconds += 10;
-            document.getElementById('firstHalfTime').textContent = formatTime(firstHalfMilliseconds);
-            if (firstHalfMilliseconds >= 45 * 60 * 1000) {
-                firstHalfComplete = true;
-                pauseFirstHalf();
-                startFirstHalfExtraTime();
-            }
-        }, 10);
-    }
+function startTimer() {
+    timerInterval = setInterval(updateTime, 100);
 }
 
-function pauseFirstHalf() {
-    clearInterval(firstHalfTimer);
-    firstHalfTimer = null;
+function updateTime() {
+    elapsedTime = Date.now() - startTime;
+    if (!firstHalfComplete) {
+        document.getElementById('firstHalfTime').textContent = formatTime(elapsedTime);
+        if (elapsedTime >= 45 * 60 * 1000) {
+            firstHalfComplete = true;
+            clearInterval(timerInterval);
+            startFirstHalfExtraTime();
+        }
+    } else if (secondHalfStarted) {
+        document.getElementById('secondHalfTime').textContent = formatTime(elapsedTime);
+        if (elapsedTime >= 45 * 60 * 1000) {
+            clearInterval(timerInterval);
+            startSecondHalfExtraTime();
+        }
+    }
+    document.getElementById('totalTime').textContent = formatTime(elapsedTime);
 }
 
 function startFirstHalfExtraTime() {
-    if (!firstHalfExtraTimer) {
-        firstHalfExtraTimer = setInterval(function() {
-            firstHalfExtraMilliseconds += 10;
-            document.getElementById('firstHalfExtraTime').textContent = formatTime(firstHalfExtraMilliseconds);
-        }, 10);
-    }
+    startTime = Date.now();
+    timerInterval = setInterval(updateFirstHalfExtraTime, 100);
 }
 
-function pauseFirstHalfExtraTime() {
-    clearInterval(firstHalfExtraTimer);
-    firstHalfExtraTimer = null;
-}
-
-function startSecondHalf() {
-    if (!secondHalfTimer) {
-        secondHalfMilliseconds = 0; 
-        secondHalfTimer = setInterval(function() {
-            secondHalfMilliseconds += 10;
-            document.getElementById('secondHalfTime').textContent = formatTime(secondHalfMilliseconds);
-            if (secondHalfMilliseconds >= 45 * 60 * 1000) {
-                pauseSecondHalf();
-                startSecondHalfExtraTime();
-            }
-        }, 10);
-    }
-}
-
-function pauseSecondHalf() {
-    clearInterval(secondHalfTimer);
-    secondHalfTimer = null;
+function updateFirstHalfExtraTime() {
+    elapsedTime = Date.now() - startTime;
+    document.getElementById('firstHalfExtraTime').textContent = formatTime(elapsedTime);
 }
 
 function startSecondHalfExtraTime() {
-    if (!secondHalfExtraTimer) {
-        secondHalfExtraTimer = setInterval(function() {
-            secondHalfExtraMilliseconds += 10;
-            document.getElementById('secondHalfExtraTime').textContent = formatTime(secondHalfExtraMilliseconds);
-        }, 10);
-    }
+    startTime = Date.now();
+    timerInterval = setInterval(updateSecondHalfExtraTime, 100);
 }
 
-function pauseSecondHalfExtraTime() {
-    clearInterval(secondHalfExtraTimer);
-    secondHalfExtraTimer = null;
-}
-
-function startTotalTime() {
-    if (!totalTimeTimer) {
-        totalTimeTimer = setInterval(function() {
-            totalMilliseconds += 10;
-            document.getElementById('totalTime').textContent = formatTime(totalMilliseconds);
-        }, 10);
-    }
-}
-
-function pauseTotalTime() {
-    clearInterval(totalTimeTimer);
-    totalTimeTimer = null;
-}
-
-function stopAllTimers() {
-    pauseFirstHalf();
-    pauseFirstHalfExtraTime();
-    pauseSecondHalf();
-    pauseSecondHalfExtraTime();
-    pauseTotalTime();
+function updateSecondHalfExtraTime() {
+    elapsedTime = Date.now() - startTime;
+    document.getElementById('secondHalfExtraTime').textContent = formatTime(elapsedTime);
 }
 
 function resetAllTimers() {
-    stopAllTimers();
-
-    firstHalfMilliseconds = 0;
-    firstHalfExtraMilliseconds = 0;
-    secondHalfMilliseconds = 0;
-    secondHalfExtraMilliseconds = 0;
-    totalMilliseconds = 0;
-    isFirstHalf = true;
+    startTime = null;
+    elapsedTime = 0;
     firstHalfComplete = false;
-    isPaused = false;
+    secondHalfStarted = false;
+    firstHalfStartTime = null;
+    firstHalfStopTime = null;
+    secondHalfStartTime = null;
+    secondHalfStopTime = null;
 
+    document.getElementById('firstHalfStartTime').textContent = "--:--:--";
     document.getElementById('firstHalfTime').textContent = "00:00:00.000";
     document.getElementById('firstHalfExtraTime').textContent = "00:00:00.000";
+    document.getElementById('firstHalfStopTime').textContent = "--:--:--";
+
+    document.getElementById('secondHalfStartTime').textContent = "--:--:--";
     document.getElementById('secondHalfTime').textContent = "00:00:00.000";
     document.getElementById('secondHalfExtraTime').textContent = "00:00:00.000";
+    document.getElementById('secondHalfStopTime').textContent = "--:--:--";
+
     document.getElementById('totalTime').textContent = "00:00:00.000";
 }
 
 function formatTime(milliseconds) {
-    let hours = Math.floor(milliseconds / 3600000);
-    let minutes = Math.floor((milliseconds % 3600000) / 60000);
-    let seconds = Math.floor((milliseconds % 60000) / 1000);
-    let millis = milliseconds % 1000;
+    const hours = Math.floor(milliseconds / 3600000);
+    const minutes = Math.floor((milliseconds % 3600000) / 60000);
+    const seconds = Math.floor((milliseconds % 60000) / 1000);
+    const millis = milliseconds % 1000;
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${millis.toString().padStart(3, '0')}`;
+}
+
+function formatClockTime(date) {
+    return date.toTimeString().split(' ')[0]; // Returns HH:MM:SS from Date object
 }
