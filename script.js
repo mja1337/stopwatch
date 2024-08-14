@@ -1,5 +1,6 @@
 let startTime = null;
 let elapsedTime = 0;
+let totalElapsedTime = 0; // Tracks the total time across both halves
 let timerInterval = null;
 let firstHalfComplete = false;
 let secondHalfStarted = false;
@@ -21,6 +22,7 @@ document.getElementById('startBtn').addEventListener('click', function() {
 
 document.getElementById('pauseBtn').addEventListener('click', function() {
     clearInterval(timerInterval);
+    totalElapsedTime += elapsedTime; // Add the current elapsed time to total
     if (!firstHalfComplete) {
         firstHalfStopTime = new Date();
         document.getElementById('firstHalfStopTime').textContent = formatClockTime(firstHalfStopTime);
@@ -33,6 +35,7 @@ document.getElementById('pauseBtn').addEventListener('click', function() {
 
 document.getElementById('stopBtn').addEventListener('click', function() {
     clearInterval(timerInterval);
+    totalElapsedTime += elapsedTime; // Add the current elapsed time to total
     if (!firstHalfComplete) {
         firstHalfStopTime = new Date();
         document.getElementById('firstHalfStopTime').textContent = formatClockTime(firstHalfStopTime);
@@ -68,7 +71,7 @@ function updateTime() {
             startSecondHalfExtraTime();
         }
     }
-    document.getElementById('totalTime').textContent = formatTime(elapsedTime);
+    document.getElementById('totalTime').textContent = formatTime(totalElapsedTime + elapsedTime); // Show total elapsed time
 }
 
 function startFirstHalfExtraTime() {
@@ -94,6 +97,7 @@ function updateSecondHalfExtraTime() {
 function resetAllTimers() {
     startTime = null;
     elapsedTime = 0;
+    totalElapsedTime = 0;
     firstHalfComplete = false;
     secondHalfStarted = false;
     firstHalfStartTime = null;
