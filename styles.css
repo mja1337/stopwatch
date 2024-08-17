@@ -30,7 +30,7 @@ body {
 
 .time-display {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
@@ -50,6 +50,7 @@ body {
     color: #f00;
     text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
     white-space: nowrap;
+    text-align: center;
 }
 
 .time-for-half {
@@ -159,3 +160,11 @@ body {
         font-size: 1.4em;
     }
 }
+
+@media (max-width: 600px) {
+    .half-column {
+        width: 100%;
+        text-align: center;
+    }
+}
+
