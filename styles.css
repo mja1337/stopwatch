@@ -17,7 +17,7 @@ body {
     background-color: rgba(0, 0, 0, 0.9);
     padding: 20px;
     border-radius: 10px;
-    max-width: 80%;
+    max-width: 70%;
     width: 100%;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     margin: 20px;
@@ -30,7 +30,7 @@ body {
 
 .time-display {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
@@ -38,15 +38,12 @@ body {
 .half-column {
     width: 48%;
     min-width: 300px;
-}
-
-.total-time {
     margin-bottom: 20px;
 }
 
 .timer {
     margin: 10px 0;
-    font-size: 1.8em;
+    font-size: 2em;
     color: #f00;
     text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
     white-space: nowrap;
@@ -54,16 +51,22 @@ body {
 }
 
 .time-for-half {
-    font-size: 2em; /* Slightly larger font size */
-    color: #fff; /* White color for half times */
+    font-size: 2.2em;
+    color: #fff;
 }
 
 .extra-time {
-    color: #FFD700; /* Yellow color for extra time text */
+    color: #FFD700;
 }
 
 .start-stop-time {
-    color: #d3d3d3; /* Light grey for start and stop times */
+    color: #d3d3d3;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .controls button {
@@ -109,7 +112,7 @@ body {
     background-color: #333;
 }
 
-/* Responsive Design */
+/* Small screens (mobile devices) */
 @media only screen and (max-width: 600px) {
     .container {
         padding: 15px;
@@ -142,29 +145,90 @@ body {
     }
 }
 
-@media only screen and (min-width: 1200px) {
+/* Medium screens (tablets, small laptops) */
+@media only screen and (min-width: 601px) and (max-width: 1199px) {
     .container {
-        max-width: 50%;
+        padding: 20px;
+        max-width: 80%;
+    }
+
+    .logo {
+        max-width: 140px;
+    }
+
+    .half-column {
+        width: 45%;
     }
 
     .timer {
-        font-size: 2.2em;
+        font-size: 1.8em;
     }
 
     .time-for-half {
-        font-size: 2.4em;
+        font-size: 2em;
     }
 
     .controls button {
-        padding: 12px 25px;
+        padding: 10px 20px;
+        font-size: 1.1em;
+    }
+}
+
+/* Large screens (desktops, large laptops) */
+@media only screen and (min-width: 1200px) {
+    .container {
+        max-width: 60%;
+        padding: 30px;
+    }
+
+    .logo {
+        max-width: 180px;
+    }
+
+    .time-display {
+        justify-content: space-around;
+    }
+
+    .half-column {
+        width: 48%;
+        margin-bottom: 0;
+    }
+
+    .timer {
+        font-size: 2.5em;
+    }
+
+    .time-for-half {
+        font-size: 2.8em;
+    }
+
+    .controls button {
+        padding: 15px 30px;
         font-size: 1.4em;
     }
 }
 
-@media (max-width: 600px) {
-    .half-column {
-        width: 100%;
-        text-align: center;
+/* Ultra-wide screens (4K and above) */
+@media only screen and (min-width: 2000px) {
+    .container {
+        max-width: 50%;
+        padding: 40px;
+    }
+
+    .logo {
+        max-width: 220px;
+    }
+
+    .timer {
+        font-size: 3em;
+    }
+
+    .time-for-half {
+        font-size: 3.2em;
+    }
+
+    .controls button {
+        padding: 18px 35px;
+        font-size: 1.6em;
     }
 }
-
