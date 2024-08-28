@@ -79,9 +79,11 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
         "First Half Start Time": new Date(firstHalfStartTime).toLocaleString(),
         "First Half Elapsed Time": formatTime(firstHalfElapsedTime),
         "First Half Extra Time": formatTime(firstHalfExtraTime),
+        "First Half Stop Time": document.getElementById('firstHalfStopTime').textContent,
         "Second Half Start Time": new Date(secondHalfStartTime).toLocaleString(),
         "Second Half Elapsed Time": formatTime(secondHalfElapsedTime),
-        "Second Half Extra Time": formatTime(secondHalfExtraTime)
+        "Second Half Extra Time": formatTime(secondHalfExtraTime),
+        "Second Half Stop Time": document.getElementById('secondHalfStopTime').textContent
     };
 
     const now = new Date();
@@ -96,6 +98,7 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
 });
+
 
 function startTimer() {
     clearInterval(timerInterval);
