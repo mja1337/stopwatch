@@ -72,18 +72,16 @@ document.getElementById('resetBtn').addEventListener('click', function() {
 });
 
 document.getElementById('downloadBtn').addEventListener('click', function() {
+    const firstHalfExtraTime = firstHalfElapsedTime > HALF_DURATION ? firstHalfElapsedTime - HALF_DURATION : 0;
+    const secondHalfExtraTime = secondHalfElapsedTime > HALF_DURATION ? secondHalfElapsedTime - HALF_DURATION : 0;
+
     const timerData = {
-        firstHalf: {
-            startTime: firstHalfStartTime,
-            elapsedTime: firstHalfElapsedTime,
-            complete: firstHalfComplete
-        },
-        secondHalf: {
-            startTime: secondHalfStartTime,
-            elapsedTime: secondHalfElapsedTime,
-            started: secondHalfStarted,
-            complete: stopped
-        }
+        "First Half Start Time": new Date(firstHalfStartTime).toLocaleString(),
+        "First Half Elapsed Time": formatTime(firstHalfElapsedTime),
+        "First Half Extra Time": formatTime(firstHalfExtraTime),
+        "Second Half Start Time": new Date(secondHalfStartTime).toLocaleString(),
+        "Second Half Elapsed Time": formatTime(secondHalfElapsedTime),
+        "Second Half Extra Time": formatTime(secondHalfExtraTime)
     };
 
     const now = new Date();
