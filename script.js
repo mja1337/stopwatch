@@ -54,6 +54,7 @@ document.getElementById('stopBtn').addEventListener('click', function() {
     // Show the download button
     document.getElementById('downloadBtn').style.display = 'inline-block';
 
+    // Existing logic for stopping the timer
     if (!firstHalfComplete && !secondHalfStarted) {
         firstHalfElapsedTime = Date.now() - firstHalfStartTime;
         document.getElementById('firstHalfStopTime').textContent = formatClockTime(new Date());
