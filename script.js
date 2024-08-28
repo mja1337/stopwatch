@@ -94,9 +94,9 @@ function updateFirstHalfDisplay() {
 
 function updateSecondHalfDisplay() {
     if (secondHalfElapsedTime <= HALF_DURATION) {
-        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION + secondHalfElapsedTime); // Start from 45:00 or HALF_DURATION
+        document.getElementById('secondHalfTime').textContent = formatTime((HALF_DURATION + 60000) + secondHalfElapsedTime); // Start from 46:00
     } else {
-        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION * 2); // Cap the second half timer at 45:00 (or HALF_DURATION * 2)
+        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION * 2 + 60000); // Cap the second half timer at 90:00 (45:00 + 45:00)
         document.getElementById('secondHalfExtraTime').textContent = formatTime(secondHalfElapsedTime - HALF_DURATION);
     }
 }
