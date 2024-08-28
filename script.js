@@ -75,15 +75,18 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
     const firstHalfExtraTime = firstHalfElapsedTime > HALF_DURATION ? firstHalfElapsedTime - HALF_DURATION : 0;
     const secondHalfExtraTime = secondHalfElapsedTime > HALF_DURATION ? secondHalfElapsedTime - HALF_DURATION : 0;
 
+    const firstHalfStopTime = new Date(firstHalfStartTime + firstHalfElapsedTime).toLocaleString();
+    const secondHalfStopTime = new Date(secondHalfStartTime + secondHalfElapsedTime).toLocaleString();
+
     const timerData = {
         "First Half Start Time": new Date(firstHalfStartTime).toLocaleString(),
+        "First Half Stop Time": firstHalfStopTime,
         "First Half Elapsed Time": formatTime(firstHalfElapsedTime),
         "First Half Extra Time": formatTime(firstHalfExtraTime),
-        "First Half Stop Time": document.getElementById('firstHalfStopTime').textContent,
         "Second Half Start Time": new Date(secondHalfStartTime).toLocaleString(),
+        "Second Half Stop Time": secondHalfStopTime,
         "Second Half Elapsed Time": formatTime(secondHalfElapsedTime),
-        "Second Half Extra Time": formatTime(secondHalfExtraTime),
-        "Second Half Stop Time": document.getElementById('secondHalfStopTime').textContent
+        "Second Half Extra Time": formatTime(secondHalfExtraTime)
     };
 
     const now = new Date();
@@ -98,7 +101,6 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
 });
-
 
 function startTimer() {
     clearInterval(timerInterval);
