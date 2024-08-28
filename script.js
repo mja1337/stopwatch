@@ -123,7 +123,7 @@ function resetAllTimers() {
     document.getElementById('firstHalfStopTime').textContent = "--:--:--";
 
     document.getElementById('secondHalfStartTime').textContent = "--:--:--";
-    document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION); // Start second half at 45:00 or HALF_DURATION
+    document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION + 60000); // Start second half at 46:00
     document.getElementById('secondHalfExtraTime').textContent = "00:00.000";
     document.getElementById('secondHalfStopTime').textContent = "--:--:--";
 }
