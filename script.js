@@ -1,5 +1,4 @@
-const HALF_DURATION = 45 * 60 * 1000;  // 5 * 1000 (5 seconds) for testing, change to 45 * 60 * 1000 for actual use
-
+const HALF_DURATION = 45 * 60 * 1000;  // 45 minutes in milliseconds
 let firstHalfStartTime = null;
 let secondHalfStartTime = null;
 let firstHalfElapsedTime = 0;
@@ -7,17 +6,17 @@ let secondHalfElapsedTime = 0;
 let firstHalfComplete = false;
 let secondHalfStarted = false;
 let timerInterval = null;
-let stopped = false;  // New flag to lock timers when stopped
+let stopped = false;
 
 document.getElementById('startBtn').addEventListener('click', function() {
-    if (stopped) return;  // Prevent starting if timers are stopped
+    if (stopped) return;
 
     if (!firstHalfComplete && !secondHalfStarted) {
         if (firstHalfStartTime === null) {
             firstHalfStartTime = Date.now();
             document.getElementById('firstHalfStartTime').textContent = formatClockTime(new Date(firstHalfStartTime));
         } else {
-            firstHalfStartTime = Date.now() - firstHalfElapsedTime; // Continue from where we left off
+            firstHalfStartTime = Date.now() - firstHalfElapsedTime;
         }
         startTimer();
     } else if (firstHalfComplete && !secondHalfStarted) {
@@ -25,7 +24,7 @@ document.getElementById('startBtn').addEventListener('click', function() {
             secondHalfStartTime = Date.now();
             document.getElementById('secondHalfStartTime').textContent = formatClockTime(new Date(secondHalfStartTime));
         } else {
-            secondHalfStartTime = Date.now() - secondHalfElapsedTime; // Continue from where we left off
+            secondHalfStartTime = Date.now() - secondHalfElapsedTime;
         }
         secondHalfStarted = true;
         startTimer();
@@ -33,9 +32,9 @@ document.getElementById('startBtn').addEventListener('click', function() {
 });
 
 document.getElementById('pauseBtn').addEventListener('click', function() {
-    if (stopped) return;  // Prevent pausing if timers are stopped
+    if (stopped) return;
     clearInterval(timerInterval);
-    updateElapsedTime();  // Capture the current elapsed time when paused
+    updateElapsedTime();
     if (!firstHalfComplete && !secondHalfStarted) {
         firstHalfElapsedTime = Date.now() - firstHalfStartTime;
         document.getElementById('firstHalfStopTime').textContent = formatClockTime(new Date());
@@ -47,10 +46,14 @@ document.getElementById('pauseBtn').addEventListener('click', function() {
 });
 
 document.getElementById('stopBtn').addEventListener('click', function() {
-    if (stopped) return;  // Prevent further updates if already stopped
-    clearInterval(timerInterval); // Stop the timer updates
-    updateElapsedTime();  // Capture the final elapsed time when stopped
-    stopped = true;  // Lock the timers
+    if (stopped) return;
+    clearInterval(timerInterval);
+    updateElapsedTime();
+    stopped = true;
+
+    // Show the download button
+    document.getElementById('downloadBtn').style.display = 'inline-block';
+
     if (!firstHalfComplete && !secondHalfStarted) {
         firstHalfElapsedTime = Date.now() - firstHalfStartTime;
         document.getElementById('firstHalfStopTime').textContent = formatClockTime(new Date());
@@ -62,14 +65,42 @@ document.getElementById('stopBtn').addEventListener('click', function() {
 });
 
 document.getElementById('resetBtn').addEventListener('click', function() {
-    clearInterval(timerInterval);
     resetAllTimers();
-    stopped = false;  // Unlock timers after reset
+    stopped = false;
+    document.getElementById('downloadBtn').style.display = 'none'; // Hide the download button after reset
+});
+
+document.getElementById('downloadBtn').addEventListener('click', function() {
+    const timerData = {
+        firstHalf: {
+            startTime: firstHalfStartTime,
+            elapsedTime: firstHalfElapsedTime,
+            complete: firstHalfComplete
+        },
+        secondHalf: {
+            startTime: secondHalfStartTime,
+            elapsedTime: secondHalfElapsedTime,
+            started: secondHalfStarted,
+            complete: stopped
+        }
+    };
+
+    const now = new Date();
+    const dateString = now.toISOString().slice(0, 19).replace(/-/g, '').replace(/:/g, '').replace('T', '-');
+    const filename = `rbfc-stopwatch-data-${dateString}.txt`;
+
+    const dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(timerData, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", filename);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
 });
 
 function startTimer() {
-    clearInterval(timerInterval); // Clear any existing interval before starting a new one
-    timerInterval = setInterval(updateTime, 50); // Update every 50ms for smooth display
+    clearInterval(timerInterval);
+    timerInterval = setInterval(updateTime, 50);
 }
 
 function updateTime() {
@@ -94,9 +125,9 @@ function updateFirstHalfDisplay() {
 
 function updateSecondHalfDisplay() {
     if (secondHalfElapsedTime <= HALF_DURATION) {
-        document.getElementById('secondHalfTime').textContent = formatTime((HALF_DURATION + 60000) + secondHalfElapsedTime); // Start from 46:00
+        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION + 60000 + secondHalfElapsedTime); // Start from 46:00
     } else {
-        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION * 2 + 60000); // Cap the second half timer at 90:00 (45:00 + 45:00)
+        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION * 2 + 60000); // Cap at 90:00
         document.getElementById('secondHalfExtraTime').textContent = formatTime(secondHalfElapsedTime - HALF_DURATION);
     }
 }
@@ -126,6 +157,9 @@ function resetAllTimers() {
     document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION + 60000); // Start second half at 46:00
     document.getElementById('secondHalfExtraTime').textContent = "00:00.000";
     document.getElementById('secondHalfStopTime').textContent = "--:--:--";
+
+    // Hide the download button after reset
+    document.getElementById('downloadBtn').style.display = 'none';
 }
 
 function formatTime(milliseconds) {
