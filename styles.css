@@ -112,6 +112,25 @@ body {
     background-color: #333;
 }
 
+#downloadBtn {
+        display: none;
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+    }
+
+    #downloadBtn:hover {
+        background-color: #45a049;
+    }
+
 /* Small screens (mobile devices) */
 @media only screen and (max-width: 600px) {
     .container {
