@@ -78,6 +78,7 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
     const firstHalfStopTime = new Date(firstHalfStartTime + firstHalfElapsedTime).toLocaleString();
     const secondHalfStopTime = new Date(secondHalfStartTime + secondHalfElapsedTime).toLocaleString();
 
+    // Add team scores to the downloadable data
     const timerData = {
         "First Half Start Time": new Date(firstHalfStartTime).toLocaleString(),
         "First Half Stop Time": firstHalfStopTime,
@@ -86,7 +87,9 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
         "Second Half Start Time": new Date(secondHalfStartTime).toLocaleString(),
         "Second Half Stop Time": secondHalfStopTime,
         "Second Half Elapsed Time": formatTime(secondHalfElapsedTime),
-        "Second Half Extra Time": formatTime(secondHalfExtraTime)
+        "Second Half Extra Time": formatTime(secondHalfExtraTime),
+        "Real Bedford Score": team1Score,
+        "Away Team Score": team2Score
     };
 
     const now = new Date();
@@ -175,4 +178,19 @@ function formatTime(milliseconds) {
 
 function formatClockTime(date) {
     return date.toTimeString().split(' ')[0]; // Returns HH:MM:SS from Date object
+}
+
+// Initial scores for both teams
+let team1Score = 0;
+let team2Score = 0;
+
+// Function to change score
+function changeScore(team, value) {
+    if (team === 'team1') {
+        team1Score = Math.min(Math.max(team1Score + value, 0), 9); // Clamp between 0 and 9
+        document.getElementById('team1Score').innerText = team1Score;
+    } else if (team === 'team2') {
+        team2Score = Math.min(Math.max(team2Score + value, 0), 9); // Clamp between 0 and 9
+        document.getElementById('team2Score').innerText = team2Score;
+    }
 }
