@@ -10,11 +10,11 @@
 <body>
     <div class="container">
         <img src="rbfclogo.png" alt="Real Bedford Logo" class="logo">
-        
+
          <!-- Scoreboard Section -->
          <div class="scoreboard">
             <div class="team">
-                <h2>Real Bedford</h2>
+                <input type="text" id="team1Name" placeholder="Team 1" value="Real Bedford">
                 <div class="score-control">
                     <button class="decrease" onclick="changeScore('team1', -1)">-</button>
                     <span id="team1Score">0</span>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="team">
-                <h2>Enemy</h2>
+                <input type="text" id="team2Name" placeholder="Team 2" value="Enemy Team">
                 <div class="score-control">
                     <button class="decrease" onclick="changeScore('team2', -1)">-</button>
                     <span id="team2Score">0</span>
