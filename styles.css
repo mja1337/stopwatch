@@ -289,3 +289,50 @@ span {
     display: inline-block;
     text-align: center;
 }
+/* Style for the team name inputs */
+input[type="text"] {
+    font-size: 40px;        /* Match h2 font size */
+    font-weight: bold;      /* Match h2 font weight */
+    text-align: center;     /* Center the text */
+    width: 100%;            /* Full width for consistency */
+    padding: 10px;          /* Add padding for better appearance */
+    margin: 10px 0;         /* Add margin for spacing */
+    background-color: transparent; /* Transparent background */
+    color: #fff;            /* White text */
+    border: none;           /* Remove border */
+    outline: none;          /* Remove outline on focus */
+    font-family: inherit;   /* Use the same font family as the rest of the site */
+}
+
+input[type="text"]:focus {
+    outline: none;          /* No focus outline */
+    color: #fff;            /* Keep the text white */
+}
+
+/* Style for the container holding team names and scores */
+.team-scores {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.team {
+    text-align: center;
+    width: 48%;
+}
+
+.team label {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;            /* Ensure the label text is white */
+}
+
+.team span {
+    font-size: 20px;
+    display: block;
+    margin-top: 5px;
+    color: #fff;            /* Ensure the score text is white */
+}
+
