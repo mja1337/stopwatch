@@ -78,7 +78,11 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
     const firstHalfStopTime = new Date(firstHalfStartTime + firstHalfElapsedTime).toLocaleString();
     const secondHalfStopTime = new Date(secondHalfStartTime + secondHalfElapsedTime).toLocaleString();
 
-    // Add team scores to the downloadable data
+    // Get team names from input fields
+    const team1Name = document.getElementById('team1Name').value;
+    const team2Name = document.getElementById('team2Name').value;
+
+    // Add team scores and names to the downloadable data
     const timerData = {
         "First Half Start Time": new Date(firstHalfStartTime).toLocaleString(),
         "First Half Stop Time": firstHalfStopTime,
@@ -88,8 +92,10 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
         "Second Half Stop Time": secondHalfStopTime,
         "Second Half Elapsed Time": formatTime(secondHalfElapsedTime),
         "Second Half Extra Time": formatTime(secondHalfExtraTime),
-        "Real Bedford Score": team1Score,
-        "Away Team Score": team2Score
+        "Team 1 Name": team1Name,  // Include Team 1 Name
+        "Team 1 Score": team1Score,  // Include Team 1 Score
+        "Team 2 Name": team2Name,  // Include Team 2 Name
+        "Team 2 Score": team2Score   // Include Team 2 Score
     };
 
     const now = new Date();
@@ -104,6 +110,7 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
 });
+
 
 function startTimer() {
     clearInterval(timerInterval);
