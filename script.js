@@ -141,7 +141,7 @@ function updateSecondHalfDisplay() {
     if (secondHalfElapsedTime <= HALF_DURATION) {
         document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION + secondHalfElapsedTime); // Start from 45:00
     } else {
-        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION * 2 + 60000); // Cap at 90:00
+        document.getElementById('secondHalfTime').textContent = formatTime(HALF_DURATION * 2); // Cap at 90:00
         document.getElementById('secondHalfExtraTime').textContent = formatTime(secondHalfElapsedTime - HALF_DURATION);
     }
 }
