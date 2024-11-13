@@ -8,6 +8,15 @@ let secondHalfStarted = false;
 let timerInterval = null;
 let stopped = false;
 
+// Add an event listener to prompt before leaving the page
+window.addEventListener('beforeunload', function (e) {
+    if (timerInterval) {  // Replace or add other conditions as needed
+        e.preventDefault();  // Required for some browsers
+        return '';           // Triggers the default confirmation dialog
+    }
+});
+
+
 document.getElementById('startBtn').addEventListener('click', function() {
     if (stopped) return;
 
